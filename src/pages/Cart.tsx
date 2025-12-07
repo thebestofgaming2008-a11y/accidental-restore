@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
+import { getFirstImage } from '@/utils/imageLoader';
 
 const Cart = () => {
   const { items, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
@@ -15,7 +16,7 @@ const Cart = () => {
           <title>Cart - Maktabah Abu Hurayrah</title>
         </Helmet>
         <Layout>
-          <div className="container mx-auto px-4 py-16 text-center">
+          <div className="container mx-auto px-4 py-16 text-center animate-fade-in">
             <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
             <h1 className="font-philosopher text-2xl font-bold mb-2">Your Cart is Empty</h1>
             <p className="text-muted-foreground mb-6">Add some products to your cart to get started.</p>
@@ -34,65 +35,76 @@ const Cart = () => {
         <title>Cart ({items.length}) - Maktabah Abu Hurayrah</title>
       </Helmet>
       <Layout>
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 animate-fade-in">
           <h1 className="font-philosopher text-3xl font-bold mb-8">Shopping Cart</h1>
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
-              {items.map((item) => (
-                <div
-                  key={item.product.id}
-                  className="flex gap-4 bg-card rounded-lg p-4 border border-border"
-                >
-                  {/* Image Placeholder */}
-                  <div className="w-24 h-24 bg-muted rounded-md flex-shrink-0 flex items-center justify-center">
-                    <ShoppingBag className="w-8 h-8 text-muted-foreground/30" />
-                  </div>
+              {items.map((item) => {
+                const imageUrl = getFirstImage(item.product.category, item.product.id);
+                return (
+                  <div
+                    key={item.product.id}
+                    className="flex gap-4 bg-card rounded-lg p-4 border border-border hover:shadow-md transition-shadow"
+                  >
+                    {/* Product Image */}
+                    <div className="w-24 h-24 bg-muted rounded-md flex-shrink-0 overflow-hidden">
+                      <img 
+                        src={imageUrl} 
+                        alt={item.product.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center"><svg class="w-8 h-8 text-muted-foreground/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></div>';
+                        }}
+                      />
+                    </div>
 
-                  {/* Details */}
-                  <div className="flex-1 min-w-0">
-                    <Link
-                      to={`/product/${item.product.id}`}
-                      className="font-philosopher font-semibold hover:text-primary line-clamp-1"
-                    >
-                      {item.product.name}
-                    </Link>
-                    <p className="text-sm text-muted-foreground">{item.product.category}</p>
-                    <p className="font-bold mt-1">₹{item.product.price.toLocaleString('en-IN')}</p>
+                    {/* Details */}
+                    <div className="flex-1 min-w-0">
+                      <Link
+                        to={`/product/${item.product.id}`}
+                        className="font-philosopher font-semibold hover:text-primary line-clamp-1 transition-colors"
+                      >
+                        {item.product.name}
+                      </Link>
+                      <p className="text-sm text-muted-foreground">{item.product.category}</p>
+                      <p className="font-bold mt-1">₹{item.product.price.toLocaleString('en-IN')}</p>
 
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-2 mt-2">
+                      {/* Quantity Controls */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                          className="p-1 rounded border border-border hover:bg-muted transition-colors"
+                        >
+                          <Minus size={14} />
+                        </button>
+                        <span className="w-8 text-center font-medium">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                          className="p-1 rounded border border-border hover:bg-muted transition-colors"
+                        >
+                          <Plus size={14} />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Subtotal & Remove */}
+                    <div className="flex flex-col items-end justify-between">
+                      <p className="font-bold">
+                        ₹{(item.product.price * item.quantity).toLocaleString('en-IN')}
+                      </p>
                       <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                        className="p-1 rounded border border-border hover:bg-muted"
+                        onClick={() => removeFromCart(item.product.id)}
+                        className="text-destructive hover:text-destructive/80 p-1 transition-colors"
                       >
-                        <Minus size={14} />
-                      </button>
-                      <span className="w-8 text-center font-medium">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                        className="p-1 rounded border border-border hover:bg-muted"
-                      >
-                        <Plus size={14} />
+                        <Trash2 size={18} />
                       </button>
                     </div>
                   </div>
-
-                  {/* Subtotal & Remove */}
-                  <div className="flex flex-col items-end justify-between">
-                    <p className="font-bold">
-                      ₹{(item.product.price * item.quantity).toLocaleString('en-IN')}
-                    </p>
-                    <button
-                      onClick={() => removeFromCart(item.product.id)}
-                      className="text-destructive hover:text-destructive/80 p-1"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
 
               <Button variant="ghost" size="sm" onClick={clearCart} className="text-destructive">
                 Clear Cart
@@ -111,22 +123,16 @@ const Cart = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Shipping</span>
-                    <span>{totalPrice >= 2000 ? 'Free' : '₹100'}</span>
+                    <span>Calculated at checkout</span>
                   </div>
                 </div>
 
                 <div className="border-t border-border pt-4 mb-6">
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>₹{(totalPrice + (totalPrice >= 2000 ? 0 : 100)).toLocaleString('en-IN')}</span>
+                    <span>₹{totalPrice.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
-
-                {totalPrice < 2000 && (
-                  <p className="text-sm text-muted-foreground mb-4 bg-muted p-3 rounded">
-                    Add ₹{(2000 - totalPrice).toLocaleString('en-IN')} more for free shipping!
-                  </p>
-                )}
 
                 <Button asChild className="w-full gap-2">
                   <Link to="/checkout">

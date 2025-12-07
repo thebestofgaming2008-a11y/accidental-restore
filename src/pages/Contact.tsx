@@ -29,7 +29,7 @@ const Contact = () => {
     const message = `*Contact Form - Maktabah Abu Hurayrah*\n\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
     
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/918491943437?text=${encodedMessage}`;
     
     toast.success('Opening WhatsApp...');
     window.open(whatsappUrl, '_blank');
@@ -42,7 +42,7 @@ const Contact = () => {
         <meta name="description" content="Get in touch with Maktabah Abu Hurayrah for orders, inquiries, or support." />
       </Helmet>
       <Layout>
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12 animate-fade-in">
           <div className="max-w-4xl mx-auto">
             <h1 className="font-philosopher text-3xl md:text-4xl font-bold text-center mb-4">
               Contact Us
@@ -63,7 +63,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium">Email</h3>
-                      <p className="text-muted-foreground text-sm">contact@maktabahabuhurayrah.com</p>
+                      <p className="text-muted-foreground text-sm">abuhurayrahessentials@gmail.com</p>
                     </div>
                   </div>
 
@@ -73,7 +73,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium">WhatsApp</h3>
-                      <p className="text-muted-foreground text-sm">+91 98765 43210</p>
+                      <p className="text-muted-foreground text-sm">+91 84919 43437</p>
                     </div>
                   </div>
 
@@ -95,7 +95,7 @@ const Contact = () => {
                     For faster response, reach us directly on WhatsApp. We typically respond within 2-4 hours during business hours.
                   </p>
                   <Button asChild variant="outline" className="gap-2">
-                    <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/918491943437" target="_blank" rel="noopener noreferrer">
                       <MessageCircle size={16} />
                       Chat on WhatsApp
                     </a>

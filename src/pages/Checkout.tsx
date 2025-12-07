@@ -38,14 +38,11 @@ const Checkout = () => {
       `• ${item.product.name} x${item.quantity} - ₹${(item.product.price * item.quantity).toLocaleString('en-IN')}`
     ).join('\n');
     
-    const shippingCost = totalPrice >= 2000 ? 0 : 100;
-    const grandTotal = totalPrice + shippingCost;
-    
-    const message = `*New Order from Maktabah Abu Hurayrah*\n\n*Customer Details:*\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\n\n*Shipping Address:*\n${formData.address}\n${formData.city}, ${formData.state} - ${formData.pincode}\n\n*Order Items:*\n${orderItems}\n\n*Subtotal:* ₹${totalPrice.toLocaleString('en-IN')}\n*Shipping:* ${shippingCost === 0 ? 'Free' : '₹100'}\n*Total:* ₹${grandTotal.toLocaleString('en-IN')}\n\n*Notes:* ${formData.notes || 'None'}`;
+    const message = `*New Order from Maktabah Abu Hurayrah*\n\n*Customer Details:*\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\n\n*Shipping Address:*\n${formData.address}\n${formData.city}, ${formData.state} - ${formData.pincode}\n\n*Order Items:*\n${orderItems}\n\n*Total:* ₹${totalPrice.toLocaleString('en-IN')}\n\n*Notes:* ${formData.notes || 'None'}`;
     
     // Encode message for WhatsApp
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/918491943437?text=${encodedMessage}`;
     
     toast.success('Redirecting to WhatsApp to complete your order...');
     window.open(whatsappUrl, '_blank');
@@ -58,7 +55,7 @@ const Checkout = () => {
           <title>Checkout - Maktabah Abu Hurayrah</title>
         </Helmet>
         <Layout>
-          <div className="container mx-auto px-4 py-16 text-center">
+          <div className="container mx-auto px-4 py-16 text-center animate-fade-in">
             <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
             <h1 className="font-philosopher text-2xl font-bold mb-2">No Items to Checkout</h1>
             <p className="text-muted-foreground mb-6">Add some products to your cart first.</p>
@@ -71,19 +68,16 @@ const Checkout = () => {
     );
   }
 
-  const shippingCost = totalPrice >= 2000 ? 0 : 100;
-  const grandTotal = totalPrice + shippingCost;
-
   return (
     <>
       <Helmet>
         <title>Checkout - Maktabah Abu Hurayrah</title>
       </Helmet>
       <Layout>
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 animate-fade-in">
           <Link
             to="/cart"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Cart
@@ -248,11 +242,11 @@ const Checkout = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Shipping</span>
-                    <span>{shippingCost === 0 ? 'Free' : '₹100'}</span>
+                    <span>Contact for rates</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg pt-2 border-t border-border">
                     <span>Total</span>
-                    <span>₹{grandTotal.toLocaleString('en-IN')}</span>
+                    <span>₹{totalPrice.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </div>

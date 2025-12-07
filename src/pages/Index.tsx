@@ -4,7 +4,7 @@ import CategorySection from '@/components/CategorySection';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import BundleDeals from '@/components/BundleDeals';
 import { Helmet } from 'react-helmet-async';
-import { Truck, Shield, Headphones, CreditCard } from 'lucide-react';
+import { Shield, Headphones, CreditCard, Package } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -37,11 +37,11 @@ const Index = () => {
               </div>
               <div className="bg-card rounded-xl p-5 md:p-6 text-center border border-border hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                  <Truck className="w-6 h-6 text-primary" />
+                  <Package className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-philosopher font-bold text-sm md:text-base mb-2">Free Shipping</h3>
+                <h3 className="font-philosopher font-bold text-sm md:text-base mb-2">Careful Packaging</h3>
                 <p className="text-xs md:text-sm text-muted-foreground">
-                  Free shipping on orders above ₹2000 with careful packaging
+                  All items securely packed for safe delivery
                 </p>
               </div>
               <div className="bg-card rounded-xl p-5 md:p-6 text-center border border-border hover:shadow-md transition-shadow">
