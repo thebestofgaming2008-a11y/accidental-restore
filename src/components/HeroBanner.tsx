@@ -7,13 +7,13 @@ const HeroBanner = () => {
     <section className="relative bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground overflow-hidden">
       {/* Decorative Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 w-40 h-40 border-2 border-primary-foreground rounded-full" />
-        <div className="absolute bottom-10 right-10 w-60 h-60 border-2 border-primary-foreground rounded-full" />
-        <div className="absolute top-1/2 left-1/4 w-20 h-20 border border-primary-foreground rotate-45" />
+        <div className="absolute top-10 left-10 w-40 h-40 border-2 border-primary-foreground rounded-full animate-pulse" />
+        <div className="absolute bottom-10 right-10 w-60 h-60 border-2 border-primary-foreground rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/4 w-20 h-20 border border-primary-foreground rotate-45 animate-pulse" style={{ animationDelay: '0.5s' }} />
       </div>
 
       <div className="container mx-auto px-4 py-16 md:py-24 relative">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center animate-fade-in">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-primary-foreground/10 rounded-full px-4 py-2 mb-6">
             <Star className="w-4 h-4 fill-current" />
@@ -32,13 +32,13 @@ const HeroBanner = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="secondary" className="gap-2 font-philosopher">
+            <Button asChild size="lg" variant="secondary" className="gap-2 font-philosopher hover:scale-105 transition-transform">
               <Link to="/shop">
                 <BookOpen size={20} />
                 Browse Collection
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="gap-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-philosopher">
+            <Button asChild size="lg" variant="outline" className="gap-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-philosopher hover:scale-105 transition-transform">
               <Link to="/shop?category=Combos">
                 View Combos
                 <ArrowRight size={20} />
@@ -57,8 +57,8 @@ const HeroBanner = () => {
               <p className="text-sm opacity-80">Authentic</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold font-philosopher">Free</p>
-              <p className="text-sm opacity-80">Shipping 2K+</p>
+              <p className="text-2xl md:text-3xl font-bold font-philosopher">Fast</p>
+              <p className="text-sm opacity-80">Delivery</p>
             </div>
           </div>
         </div>

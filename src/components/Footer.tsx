@@ -73,8 +73,8 @@ const Footer = () => {
           <div>
             <h4 className="font-philosopher font-bold text-lg mb-4">Contact</h4>
             <ul className="space-y-2 text-sm opacity-80">
-              <li>Email: contact@maktabahabuhurayrah.com</li>
-              <li>WhatsApp: +91 98765 43210</li>
+              <li>Email: abuhurayrahessentials@gmail.com</li>
+              <li>WhatsApp: +91 84919 43437</li>
               <li>Hours: Sat-Thu, 10am-6pm IST</li>
             </ul>
           </div>

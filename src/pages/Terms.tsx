@@ -9,7 +9,7 @@ const Terms = () => {
         <meta name="description" content="Read our terms of service and conditions for using our website." />
       </Helmet>
       <Layout>
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12 animate-fade-in">
           <div className="max-w-3xl mx-auto">
             <h1 className="font-philosopher text-3xl md:text-4xl font-bold text-center mb-8">
               Terms of Service
@@ -69,7 +69,7 @@ const Terms = () => {
               <p className="text-muted-foreground">
                 These Terms of Service shall be governed by and construed in accordance with the laws 
                 of India. Any disputes shall be subject to the exclusive jurisdiction of the courts 
-                in [City], India.
+                in India.
               </p>
 
               <h2 className="font-philosopher text-xl font-bold mt-8 mb-4">Changes to Terms</h2>
@@ -82,7 +82,7 @@ const Terms = () => {
               <h2 className="font-philosopher text-xl font-bold mt-8 mb-4">Contact Us</h2>
               <p className="text-muted-foreground">
                 If you have any questions about these Terms of Service, please contact us at 
-                contact@maktabahabuhurayrah.com or via WhatsApp at +91 98765 43210.
+                abuhurayrahessentials@gmail.com or via WhatsApp at +91 84919 43437.
               </p>
             </div>
           </div>

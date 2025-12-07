@@ -9,7 +9,6 @@ export interface Product {
   inStock: boolean;
   rating: number;
   reviews: number;
-  priceNote?: string;
 }
 
 export const categories = [
@@ -39,8 +38,7 @@ export const products: Product[] = [
     badge: "Bestseller",
     inStock: true,
     rating: 5.0,
-    reviews: 12,
-    priceNote: "Contact for Price"
+    reviews: 12
   },
   {
     id: "foundation-of-sunnah",
@@ -52,8 +50,7 @@ export const products: Product[] = [
     badge: "Restocked",
     inStock: true,
     rating: 5.0,
-    reviews: 8,
-    priceNote: "Contact for Price"
+    reviews: 8
   },
   {
     id: "kitab-at-tawhid",
@@ -76,8 +73,7 @@ export const products: Product[] = [
     image: "/images/books/sharh-aqeedah-wasitiyyah/1.jpg",
     inStock: true,
     rating: 5.0,
-    reviews: 6,
-    priceNote: "Free with 4 books"
+    reviews: 6
   },
   {
     id: "justice-of-companions",
@@ -113,8 +109,7 @@ export const products: Product[] = [
     badge: "Premium",
     inStock: true,
     rating: 5.0,
-    reviews: 22,
-    priceNote: "Contact for Price"
+    reviews: 22
   },
   {
     id: "tafseer-ahsan-ul-bayan",
@@ -138,8 +133,7 @@ export const products: Product[] = [
     badge: "Classic",
     inStock: true,
     rating: 5.0,
-    reviews: 25,
-    priceNote: "Contact for Price"
+    reviews: 25
   },
 
   // HADITH (5 products)
@@ -164,8 +158,7 @@ export const products: Product[] = [
     image: "/images/books/summarised-bukhari/1.jpg",
     inStock: true,
     rating: 5.0,
-    reviews: 14,
-    priceNote: "Contact for Price"
+    reviews: 14
   },
   {
     id: "sahih-muslim",
@@ -177,8 +170,7 @@ export const products: Product[] = [
     badge: "Essential",
     inStock: true,
     rating: 5.0,
-    reviews: 28,
-    priceNote: "Contact for Price"
+    reviews: 28
   },
   {
     id: "summarised-muslim",
@@ -189,8 +181,7 @@ export const products: Product[] = [
     image: "/images/books/summarised-muslim/1.jpg",
     inStock: true,
     rating: 5.0,
-    reviews: 11,
-    priceNote: "Contact for Price"
+    reviews: 11
   },
   {
     id: "riyad-as-saliheen",
@@ -202,8 +193,7 @@ export const products: Product[] = [
     badge: "Popular",
     inStock: true,
     rating: 5.0,
-    reviews: 20,
-    priceNote: "Contact for Price"
+    reviews: 20
   },
 
   // FIQH (3 products)
@@ -389,9 +379,9 @@ export const products: Product[] = [
     name: "Bukhari + Muslim Combo",
     price: 3999,
     category: "Combos",
-    description: "Both Sahih Bukhari and Sahih Muslim in one bundle. Save ₹350!",
+    description: "Both Sahih Bukhari and Sahih Muslim in one bundle. Great savings!",
     image: "/images/books/bukhari-muslim-combo/1.jpg",
-    badge: "Save ₹350",
+    badge: "Popular",
     inStock: true,
     rating: 5.0,
     reviews: 18
@@ -500,152 +490,183 @@ export const products: Product[] = [
     badge: "Premium",
     inStock: true,
     rating: 5.0,
-    reviews: 21
+    reviews: 14
   },
   {
-    id: "premium-kufi",
-    name: "Premium Kufi Cap",
-    price: 299,
+    id: "emirati-thobe",
+    name: "Emirati Style Thobe",
+    price: 1599,
     category: "Clothing",
-    description: "Handcrafted kufi caps in traditional designs.",
-    image: "/images/books/premium-kufi/1.jpg",
-    inStock: true,
-    rating: 5.0,
-    reviews: 16
-  },
-  {
-    id: "arabic-caps",
-    name: "Arabic Style Caps",
-    price: 249,
-    category: "Clothing",
-    description: "Traditional Arabic caps for daily prayer and wear.",
-    image: "/images/books/arabic-caps/1.jpg",
-    inStock: true,
-    rating: 5.0,
-    reviews: 13
-  },
-  {
-    id: "modest-gloves",
-    name: "Modest Gloves",
-    price: 199,
-    category: "Clothing",
-    description: "Comfortable gloves for complete modest covering.",
-    image: "/images/books/modest-gloves/1.jpg",
+    description: "Elegant Emirati style thobe with collar design.",
+    image: "/images/books/emirati-thobe/1.jpg",
     inStock: true,
     rating: 5.0,
     reviews: 8
   },
   {
-    id: "arm-sleeves",
-    name: "Arm Sleeves",
-    price: 175,
+    id: "childrens-thobe",
+    name: "Children's Thobe",
+    price: 699,
     category: "Clothing",
-    description: "Stretchy arm sleeves for additional coverage.",
-    image: "/images/books/arm-sleeves/1.jpg",
+    description: "Comfortable thobes for children in various sizes.",
+    image: "/images/books/childrens-thobe/1.jpg",
+    badge: "For Kids",
     inStock: true,
     rating: 5.0,
-    reviews: 10
+    reviews: 16
+  },
+  {
+    id: "prayer-cap",
+    name: "Prayer Caps - Pack of 3",
+    price: 299,
+    category: "Clothing",
+    description: "Comfortable prayer caps in a pack of 3 different colors.",
+    image: "/images/books/prayer-cap/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 22
+  },
+  {
+    id: "miswak-set",
+    name: "Miswak Set",
+    price: 149,
+    category: "Clothing",
+    description: "Natural miswak sticks in a convenient set.",
+    image: "/images/books/miswak-set/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 35
   },
 
   // HONEY (4 products)
   {
-    id: "wild-forest-honey",
-    name: "Wild Forest Honey",
-    price: 749,
+    id: "sidr-honey",
+    name: "Pure Sidr Honey",
+    price: 1299,
     category: "Honey",
-    description: "Pure wild forest honey collected from natural beehives. 100% organic.",
-    image: "/images/books/wild-forest-honey/1.jpg",
-    badge: "Natural",
+    description: "Premium quality Sidr honey sourced from Yemen. Known for its medicinal properties.",
+    image: "/images/books/sidr-honey/1.jpg",
+    badge: "Premium",
     inStock: true,
     rating: 5.0,
     reviews: 28
   },
   {
-    id: "sidr-honey",
-    name: "Sidr Honey",
-    price: 1299,
+    id: "black-seed-honey",
+    name: "Black Seed Honey",
+    price: 899,
     category: "Honey",
-    description: "Premium Sidr honey known for its healing properties and rich taste.",
-    image: "/images/books/sidr-honey/1.jpg",
-    badge: "Premium",
-    inStock: true,
-    rating: 5.0,
-    reviews: 35
-  },
-  {
-    id: "bambozia-honey",
-    name: "Bambozia Honey",
-    price: 599,
-    category: "Honey",
-    description: "Unique bambozia honey with distinct flavor profile.",
-    image: "/images/books/bambozia-honey/1.jpg",
-    inStock: true,
-    rating: 5.0,
-    reviews: 14
-  },
-  {
-    id: "multiflora-honey",
-    name: "Multiflora Honey",
-    price: 549,
-    category: "Honey",
-    description: "Delicious multiflora honey from diverse flower sources.",
-    image: "/images/books/multiflora-honey/1.jpg",
+    description: "Pure honey infused with black seed (Habbatus Sauda) for added benefits.",
+    image: "/images/books/black-seed-honey/1.jpg",
+    badge: "Popular",
     inStock: true,
     rating: 5.0,
     reviews: 19
   },
+  {
+    id: "mountain-honey",
+    name: "Mountain Honey",
+    price: 749,
+    category: "Honey",
+    description: "Natural mountain honey collected from pristine mountain regions.",
+    image: "/images/books/mountain-honey/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 15
+  },
+  {
+    id: "multiflora-honey",
+    name: "Multiflora Honey",
+    price: 499,
+    category: "Honey",
+    description: "Pure multiflora honey - a blend of nectars from various flowers.",
+    image: "/images/books/multiflora-honey/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 24
+  },
 
-  // SAFFRON (1 product)
+  // SAFFRON (2 products)
   {
     id: "kashmiri-saffron",
     name: "Kashmiri Saffron",
-    price: 899,
+    price: 599,
     category: "Saffron",
-    description: "Authentic Kashmiri saffron, the finest quality available. Grade A+.",
+    description: "Premium Kashmiri saffron - 1 gram pack. Authentic and aromatic.",
     image: "/images/books/kashmiri-saffron/1.jpg",
-    badge: "Authentic",
+    badge: "Premium",
     inStock: true,
     rating: 5.0,
-    reviews: 42
+    reviews: 12
+  },
+  {
+    id: "spanish-saffron",
+    name: "Spanish Saffron",
+    price: 449,
+    category: "Saffron",
+    description: "High-quality Spanish saffron - 0.5 gram pack.",
+    image: "/images/books/spanish-saffron/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 8
   },
 
-  // ATTARS (1 product)
+  // ATTARS (3 products)
   {
-    id: "premium-attars",
-    name: "Premium Attars Collection",
-    price: 649,
+    id: "oud-attar",
+    name: "Oud Attar",
+    price: 799,
     category: "Attars",
-    description: "Alcohol-free perfume oils in various traditional scents. Long-lasting fragrance.",
-    image: "/images/books/premium-attars/1.jpg",
-    badge: "Alcohol-Free",
+    description: "Premium oud attar - long-lasting and captivating fragrance.",
+    image: "/images/books/oud-attar/1.jpg",
+    badge: "Premium",
     inStock: true,
     rating: 5.0,
-    reviews: 26
+    reviews: 18
+  },
+  {
+    id: "musk-attar",
+    name: "White Musk Attar",
+    price: 449,
+    category: "Attars",
+    description: "Pure white musk attar with a clean, fresh scent.",
+    image: "/images/books/musk-attar/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 22
+  },
+  {
+    id: "rose-attar",
+    name: "Rose Attar",
+    price: 549,
+    category: "Attars",
+    description: "Authentic rose attar with a beautiful floral fragrance.",
+    image: "/images/books/rose-attar/1.jpg",
+    inStock: true,
+    rating: 5.0,
+    reviews: 14
   }
 ];
 
-export const getProductsByCategory = (category: string): Product[] => {
-  if (category === "All") return products;
-  return products.filter(p => p.category === category);
-};
-
 export const getProductById = (id: string): Product | undefined => {
-  return products.find(p => p.id === id);
+  return products.find(product => product.id === id);
 };
 
-export const searchProducts = (query: string): Product[] => {
-  const lowercaseQuery = query.toLowerCase();
-  return products.filter(p => 
-    p.name.toLowerCase().includes(lowercaseQuery) ||
-    p.description.toLowerCase().includes(lowercaseQuery) ||
-    p.category.toLowerCase().includes(lowercaseQuery)
-  );
+export const getProductsByCategory = (category: string): Product[] => {
+  if (category === 'All') return products;
+  return products.filter(product => product.category === category);
 };
 
 export const getFeaturedProducts = (): Product[] => {
-  return products.filter(p => p.badge).slice(0, 8);
+  return products.filter(product => product.badge).slice(0, 8);
 };
 
-export const getProductsByBadge = (badge: string): Product[] => {
-  return products.filter(p => p.badge === badge);
+export const searchProducts = (query: string): Product[] => {
+  const lowerQuery = query.toLowerCase();
+  return products.filter(
+    product =>
+      product.name.toLowerCase().includes(lowerQuery) ||
+      product.description.toLowerCase().includes(lowerQuery) ||
+      product.category.toLowerCase().includes(lowerQuery)
+  );
 };

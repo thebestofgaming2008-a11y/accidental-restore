@@ -9,7 +9,7 @@ const Privacy = () => {
         <meta name="description" content="Learn how we collect, use, and protect your personal information." />
       </Helmet>
       <Layout>
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12 animate-fade-in">
           <div className="max-w-3xl mx-auto">
             <h1 className="font-philosopher text-3xl md:text-4xl font-bold text-center mb-8">
               Privacy Policy
@@ -80,7 +80,7 @@ const Privacy = () => {
               <h2 className="font-philosopher text-xl font-bold mt-8 mb-4">Contact Us</h2>
               <p className="text-muted-foreground">
                 If you have any questions about this Privacy Policy, please contact us at 
-                contact@maktabahabuhurayrah.com or via WhatsApp at +91 98765 43210.
+                abuhurayrahessentials@gmail.com or via WhatsApp at +91 84919 43437.
               </p>
             </div>
           </div>

@@ -76,14 +76,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         )}
 
         <div className="mt-auto pt-3">
-          {product.priceNote ? (
-            <div>
-              <p className="font-bold text-base md:text-lg text-foreground">{formatPrice(product.price)}</p>
-              <p className="text-xs text-accent font-medium">{product.priceNote}</p>
-            </div>
-          ) : (
-            <p className="font-bold text-base md:text-lg text-foreground">{formatPrice(product.price)}</p>
-          )}
+          <p className="font-bold text-base md:text-lg text-foreground">{formatPrice(product.price)}</p>
         </div>
       </div>
     </Link>
