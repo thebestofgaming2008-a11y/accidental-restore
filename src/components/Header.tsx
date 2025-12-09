@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Search, Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
@@ -53,7 +53,7 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-card shadow-sm">
-      {/* Permanent Notice Bar - No close button */}
+      {/* Permanent Notice Bar */}
       <div className="bg-primary/10 text-primary text-center py-1 px-4 text-xs font-medium">
         <span>📦 All orders shipped within 2-3 business days</span>
       </div>
@@ -84,20 +84,13 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Desktop: Centered layout - Compact */}
-        <div className="hidden lg:block relative">
-          {/* Cart icon - floating top right */}
-          <Link to="/cart" className="absolute right-0 top-0 relative p-1.5">
-            <ShoppingCart size={20} />
-            {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold text-[10px]">
-                {totalItems > 99 ? '99+' : totalItems}
-              </span>
-            )}
-          </Link>
-
-          {/* Centered Logo and Tagline */}
-          <div className="flex flex-col items-center">
+        {/* Desktop: Compact layout with aligned cart */}
+        <div className="hidden lg:flex items-center justify-between gap-4">
+          {/* Left spacer for balance */}
+          <div className="w-8" />
+          
+          {/* Centered Logo and Search */}
+          <div className="flex-1 flex flex-col items-center">
             <Link to="/" className="flex flex-col items-center gap-0.5">
               <img src={logo} alt="Maktabah Abu Hurayrah" className="h-8" />
               <span className="text-[10px] text-muted-foreground font-philosopher">
@@ -125,6 +118,20 @@ const Header = () => {
               </div>
             </form>
           </div>
+
+          {/* Cart icon - aligned with nav */}
+          <Link 
+            to="/cart" 
+            className="relative p-1.5 hover:bg-muted rounded-md transition-colors"
+            aria-label="Shopping cart"
+          >
+            <ShoppingCart size={18} />
+            {totalItems > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 bg-primary text-primary-foreground text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
+                {totalItems > 99 ? '99+' : totalItems}
+              </span>
+            )}
+          </Link>
         </div>
 
         {/* Mobile Search */}
