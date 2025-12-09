@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Package, ArrowRight, Gift } from 'lucide-react';
+import { Package, ArrowRight, Gift, Star } from 'lucide-react';
 import { getProductsByCategory } from '@/data/products';
 import { formatPrice } from '@/lib/currency';
 import { Button } from '@/components/ui/button';
@@ -18,8 +18,11 @@ const BundleDeals = () => {
     toast.success(`${product.name} added to cart`);
   };
 
+  // Featured bundle - first one or create a special one
+  const featuredBundle = bundles[0];
+
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-br from-primary/5 to-accent/10">
+    <section className="py-12 md:py-16 bg-gradient-to-br from-primary/5 to-accent/10 animate-fade-in">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
@@ -35,15 +38,58 @@ const BundleDeals = () => {
               </p>
             </div>
           </div>
-          <Button asChild variant="ghost" className="hidden sm:flex gap-2 font-philosopher">
+          <Button asChild variant="default" className="hidden sm:flex gap-2 font-philosopher bg-primary text-primary-foreground hover:bg-primary/90">
             <Link to="/shop?category=Combos">
-              View All <ArrowRight size={16} />
+              View Combos <ArrowRight size={16} />
             </Link>
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {bundles.map((bundle) => (
+        {/* Featured Large Bundle */}
+        {featuredBundle && (
+          <div className="mb-8">
+            <Link
+              to={`/product/${featuredBundle.id}`}
+              className="group block bg-card rounded-2xl overflow-hidden border-2 border-primary/20 hover:border-primary hover:shadow-xl transition-all duration-300"
+            >
+              <div className="flex flex-col md:flex-row">
+                <div className="md:w-1/3 aspect-square md:aspect-auto bg-gradient-to-br from-primary/10 to-accent/20 flex items-center justify-center p-8">
+                  <div className="relative">
+                    <Package className="w-24 h-24 text-primary/60 group-hover:scale-110 transition-transform duration-300" />
+                    <Star className="absolute -top-2 -right-2 w-8 h-8 text-yellow-500 fill-yellow-500" />
+                  </div>
+                </div>
+                <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
+                  <Badge className="w-fit mb-3 bg-primary text-primary-foreground">
+                    ⭐ Featured Deal
+                  </Badge>
+                  <h3 className="font-philosopher text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors mb-3">
+                    {featuredBundle.name}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 text-lg">
+                    {featuredBundle.description}
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold text-2xl text-foreground">
+                      {formatPrice(featuredBundle.price)}
+                    </span>
+                    <Button
+                      size="lg"
+                      onClick={(e) => handleAddToCart(e, featuredBundle)}
+                      className="font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      Add to Cart
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+        )}
+
+        {/* Other Bundles Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {bundles.slice(1).map((bundle) => (
             <Link
               key={bundle.id}
               to={`/product/${bundle.id}`}
@@ -71,7 +117,7 @@ const BundleDeals = () => {
                   <Button
                     size="sm"
                     onClick={(e) => handleAddToCart(e, bundle)}
-                    className="font-semibold"
+                    className="font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
                   >
                     Add to Cart
                   </Button>
@@ -82,7 +128,7 @@ const BundleDeals = () => {
         </div>
 
         <div className="mt-8 text-center sm:hidden">
-          <Button asChild variant="outline" className="font-philosopher">
+          <Button asChild className="font-philosopher bg-primary text-primary-foreground hover:bg-primary/90">
             <Link to="/shop?category=Combos">
               View All Bundles <ArrowRight size={16} className="ml-2" />
             </Link>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, Menu, X } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { categories } from '@/data/products';
 import { Input } from '@/components/ui/input';
 import logo from '@/assets/logo.svg';
 
@@ -10,20 +9,8 @@ const Header = () => {
   const { totalItems } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showNotice, setShowNotice] = useState(true);
+  const [booksExpanded, setBooksExpanded] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const dismissed = localStorage.getItem('customs-notice-dismissed');
-    if (dismissed === 'true') {
-      setShowNotice(false);
-    }
-  }, []);
-
-  const handleDismissNotice = () => {
-    setShowNotice(false);
-    localStorage.setItem('customs-notice-dismissed', 'true');
-  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,34 +21,45 @@ const Header = () => {
     }
   };
 
+  const handleNavClick = (to: string) => {
+    setMobileMenuOpen(false);
+    navigate(to);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const bookSubcategories = [
+    { label: 'Aqeedah', to: '/shop?search=aqeedah' },
+    { label: 'Tafsir', to: '/shop?search=tafsir' },
+    { label: 'Hadith', to: '/shop?search=hadith' },
+    { label: 'Fiqh', to: '/shop?search=fiqh' },
+    { label: 'Seerah', to: '/shop?search=seerah' },
+    { label: 'Tawheed', to: '/shop?search=tawheed' },
+  ];
+
   const mainNavItems = [
     { label: 'All Products', to: '/shop' },
-    { label: 'Books', to: '/shop?category=Books' },
+    { label: 'Books', to: '/shop?category=Books', hasSubmenu: true },
     { label: 'Clothing', to: '/shop?category=Clothing' },
     { label: 'Essentials', to: '/shop?category=Honey' },
     { label: 'Contact', to: '/contact' },
   ];
 
-  const allCategories = categories.filter(cat => cat !== 'All');
+  const policyPages = [
+    { label: 'Shipping Policy', to: '/shipping' },
+    { label: 'Cancellation Policy', to: '/cancellations' },
+    { label: 'Privacy Policy', to: '/privacy' },
+    { label: 'Terms of Service', to: '/terms' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-card shadow-sm">
-      {/* Customs Notice Bar */}
-      {showNotice && (
-        <div className="bg-[hsl(45,100%,95%)] text-[hsl(30,50%,30%)] text-center py-1.5 px-4 text-xs font-medium relative">
-          <span>Important: International orders may be subject to customs duties</span>
-          <button
-            onClick={handleDismissNotice}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-[hsl(30,50%,30%,0.1)] rounded transition-colors"
-            aria-label="Dismiss notice"
-          >
-            <X size={14} />
-          </button>
-        </div>
-      )}
+      {/* Permanent Notice Bar - No close button */}
+      <div className="bg-primary/10 text-primary text-center py-1 px-4 text-xs font-medium">
+        <span>📦 All orders shipped within 2-3 business days</span>
+      </div>
 
       {/* Main Header - Compact */}
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-4 py-2">
         {/* Mobile: Flex layout with menu, logo, cart */}
         <div className="lg:hidden flex items-center justify-between">
           <button
@@ -73,7 +71,7 @@ const Header = () => {
           </button>
 
           <Link to="/" className="flex flex-col items-center">
-            <img src={logo} alt="Maktabah Abu Hurayrah" className="h-8" />
+            <img src={logo} alt="Maktabah Abu Hurayrah" className="h-7" />
           </Link>
 
           <Link to="/cart" className="relative p-1.5 -mr-1.5">
@@ -86,11 +84,11 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Desktop: Centered layout - More compact */}
+        {/* Desktop: Centered layout - Compact */}
         <div className="hidden lg:block relative">
           {/* Cart icon - floating top right */}
           <Link to="/cart" className="absolute right-0 top-0 relative p-1.5">
-            <ShoppingCart size={22} />
+            <ShoppingCart size={20} />
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold text-[10px]">
                 {totalItems > 99 ? '99+' : totalItems}
@@ -100,29 +98,29 @@ const Header = () => {
 
           {/* Centered Logo and Tagline */}
           <div className="flex flex-col items-center">
-            <Link to="/" className="flex flex-col items-center gap-1">
-              <img src={logo} alt="Maktabah Abu Hurayrah" className="h-10" />
-              <span className="text-xs text-muted-foreground font-philosopher">
+            <Link to="/" className="flex flex-col items-center gap-0.5">
+              <img src={logo} alt="Maktabah Abu Hurayrah" className="h-8" />
+              <span className="text-[10px] text-muted-foreground font-philosopher">
                 Islamic Essentials for Daily Life
               </span>
             </Link>
 
             {/* Search Bar */}
-            <form onSubmit={handleSearch} className="mt-2 w-full max-w-md">
+            <form onSubmit={handleSearch} className="mt-1.5 w-full max-w-md">
               <div className="relative">
                 <Input
                   type="text"
                   placeholder="Search for books, clothing, honey..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pr-9 bg-background h-9 text-sm"
+                  className="pr-9 bg-background h-8 text-sm"
                 />
                 <button
                   type="submit"
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label="Search"
                 >
-                  <Search size={16} />
+                  <Search size={14} />
                 </button>
               </div>
             </form>
@@ -144,7 +142,7 @@ const Header = () => {
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               aria-label="Search"
             >
-              <Search size={16} />
+              <Search size={14} />
             </button>
           </div>
         </form>
@@ -153,15 +151,32 @@ const Header = () => {
       {/* Navigation Bar - Desktop */}
       <nav className="hidden lg:block border-t border-border bg-muted/30">
         <div className="container mx-auto px-4">
-          <ul className="flex items-center justify-center gap-6 py-2">
+          <ul className="flex items-center justify-center gap-6 py-1.5">
             {mainNavItems.map((item) => (
-              <li key={item.label}>
-                <Link
-                  to={item.to}
-                  className="text-sm font-semibold text-foreground hover:text-primary transition-colors font-philosopher"
+              <li key={item.label} className="relative group">
+                <button
+                  onClick={() => handleNavClick(item.to)}
+                  className="text-sm font-semibold text-foreground hover:text-primary transition-colors font-philosopher flex items-center gap-1"
                 >
                   {item.label}
-                </Link>
+                  {item.hasSubmenu && <ChevronDown size={12} />}
+                </button>
+                {/* Books Dropdown */}
+                {item.hasSubmenu && (
+                  <div className="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="bg-card border border-border rounded-lg shadow-lg py-2 min-w-[160px]">
+                      {bookSubcategories.map((sub) => (
+                        <button
+                          key={sub.label}
+                          onClick={() => handleNavClick(sub.to)}
+                          className="block w-full text-left px-4 py-1.5 text-sm hover:bg-muted transition-colors"
+                        >
+                          {sub.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -170,37 +185,67 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <nav className="lg:hidden border-t border-border bg-card absolute left-0 right-0 top-full shadow-lg max-h-[70vh] overflow-y-auto animate-fade-in">
+        <nav className="lg:hidden border-t border-border bg-card absolute left-0 right-0 top-full shadow-lg max-h-[80vh] overflow-y-auto animate-fade-in z-50">
           <div className="py-3 px-4">
             {/* Main Navigation */}
             <div className="space-y-1 mb-3">
               {mainNavItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-2 px-3 text-sm font-semibold text-foreground hover:bg-muted rounded-md transition-colors font-philosopher"
-                >
-                  {item.label}
-                </Link>
+                <div key={item.label}>
+                  {item.hasSubmenu ? (
+                    <>
+                      <button
+                        onClick={() => setBooksExpanded(!booksExpanded)}
+                        className="w-full flex items-center justify-between py-2 px-3 text-sm font-semibold text-foreground hover:bg-muted rounded-md transition-colors font-philosopher"
+                      >
+                        {item.label}
+                        {booksExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                      </button>
+                      {booksExpanded && (
+                        <div className="ml-4 mt-1 space-y-1 border-l-2 border-primary/20 pl-3">
+                          <button
+                            onClick={() => handleNavClick(item.to)}
+                            className="block w-full text-left py-1.5 px-2 text-sm text-foreground hover:text-primary transition-colors"
+                          >
+                            All Books
+                          </button>
+                          {bookSubcategories.map((sub) => (
+                            <button
+                              key={sub.label}
+                              onClick={() => handleNavClick(sub.to)}
+                              className="block w-full text-left py-1.5 px-2 text-sm text-foreground hover:text-primary transition-colors"
+                            >
+                              {sub.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => handleNavClick(item.to)}
+                      className="block w-full text-left py-2 px-3 text-sm font-semibold text-foreground hover:bg-muted rounded-md transition-colors font-philosopher"
+                    >
+                      {item.label}
+                    </button>
+                  )}
+                </div>
               ))}
             </div>
 
-            {/* Categories */}
+            {/* Policy Pages */}
             <div className="border-t border-border pt-3">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-3">
-                Categories
+                Policies
               </p>
-              <div className="grid grid-cols-2 gap-1">
-                {allCategories.map((category) => (
-                  <Link
-                    key={category}
-                    to={`/shop?category=${category}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="py-1.5 px-3 text-sm text-foreground hover:bg-muted rounded-md transition-colors"
+              <div className="space-y-1">
+                {policyPages.map((page) => (
+                  <button
+                    key={page.label}
+                    onClick={() => handleNavClick(page.to)}
+                    className="block w-full text-left py-1.5 px-3 text-sm text-foreground hover:bg-muted rounded-md transition-colors"
                   >
-                    {category}
-                  </Link>
+                    {page.label}
+                  </button>
                 ))}
               </div>
             </div>

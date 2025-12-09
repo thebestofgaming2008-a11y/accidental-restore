@@ -20,7 +20,7 @@ const Cart = () => {
             <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
             <h1 className="font-philosopher text-2xl font-bold mb-2">Your Cart is Empty</h1>
             <p className="text-muted-foreground mb-6">Add some products to your cart to get started.</p>
-            <Button asChild>
+            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
               <Link to="/shop">Continue Shopping</Link>
             </Button>
           </div>
@@ -49,14 +49,18 @@ const Cart = () => {
                     className="flex gap-4 bg-card rounded-lg p-4 border border-border hover:shadow-md transition-shadow"
                   >
                     {/* Product Image */}
-                    <div className="w-24 h-24 bg-muted rounded-md flex-shrink-0 overflow-hidden">
+                    <div className="w-24 h-24 bg-muted rounded-md flex-shrink-0 overflow-hidden flex items-center justify-center">
                       <img 
                         src={imageUrl} 
                         alt={item.product.name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center"><svg class="w-8 h-8 text-muted-foreground/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></div>';
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = '<svg class="w-8 h-8 text-muted-foreground/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>';
+                          }
                         }}
                       />
                     </div>
@@ -74,19 +78,23 @@ const Cart = () => {
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-2 mt-2">
-                        <button
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7"
                           onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="p-1 rounded border border-border hover:bg-muted transition-colors"
                         >
                           <Minus size={14} />
-                        </button>
+                        </Button>
                         <span className="w-8 text-center font-medium">{item.quantity}</span>
-                        <button
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7"
                           onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="p-1 rounded border border-border hover:bg-muted transition-colors"
                         >
                           <Plus size={14} />
-                        </button>
+                        </Button>
                       </div>
                     </div>
 
@@ -95,18 +103,20 @@ const Cart = () => {
                       <p className="font-bold">
                         ₹{(item.product.price * item.quantity).toLocaleString('en-IN')}
                       </p>
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
                         onClick={() => removeFromCart(item.product.id)}
-                        className="text-destructive hover:text-destructive/80 p-1 transition-colors"
                       >
                         <Trash2 size={18} />
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 );
               })}
 
-              <Button variant="ghost" size="sm" onClick={clearCart} className="text-destructive">
+              <Button variant="ghost" size="sm" onClick={clearCart} className="text-destructive hover:text-destructive/80 hover:bg-destructive/10">
                 Clear Cart
               </Button>
             </div>
@@ -123,7 +133,7 @@ const Cart = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Shipping</span>
-                    <span>Calculated at checkout</span>
+                    <span className="text-muted-foreground">Calculated at checkout</span>
                   </div>
                 </div>
 
@@ -134,7 +144,7 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <Button asChild className="w-full gap-2">
+                <Button asChild className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
                   <Link to="/checkout">
                     Proceed to Checkout
                     <ArrowRight size={16} />
