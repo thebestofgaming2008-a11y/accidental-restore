@@ -1,13 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Star, ArrowRight, Instagram } from 'lucide-react';
+import { Star, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+import { useEffect, useRef } from 'react';
 
 const reviews = [
   {
@@ -45,80 +39,104 @@ const reviews = [
     text: 'The saffron is authentic and aromatic. Best quality I have found online. Highly recommend this store!',
     product: 'Kashmiri Saffron',
   },
+  {
+    id: 6,
+    name: 'Aisha R.',
+    rating: 5,
+    text: 'Mashallah, the books are exactly what I was looking for. Authentic content with beautiful binding.',
+    product: 'Riyad us Saliheen',
+  },
 ];
 
 const ReviewsCarousel = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    let animationId: number;
+    let scrollPosition = 0;
+    const speed = 0.5;
+
+    const scroll = () => {
+      scrollPosition += speed;
+      if (scrollPosition >= scrollContainer.scrollWidth / 2) {
+        scrollPosition = 0;
+      }
+      scrollContainer.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    animationId = requestAnimationFrame(scroll);
+
+    const handleMouseEnter = () => cancelAnimationFrame(animationId);
+    const handleMouseLeave = () => {
+      scrollPosition = scrollContainer.scrollLeft;
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+    scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
+      scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
+
   return (
-    <section className="py-12 md:py-16 bg-card animate-fade-in">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Star className="w-6 h-6 text-primary fill-primary" />
-            </div>
-            <div>
-              <h2 className="font-philosopher text-2xl md:text-3xl font-bold text-foreground">
-                Customer Reviews
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                What our customers say about us
+    <section className="py-6 bg-card/50">
+      <div className="relative overflow-hidden">
+        {/* Fade edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-card/50 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-card/50 to-transparent z-10 pointer-events-none" />
+        
+        {/* Auto-scrolling container */}
+        <div 
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-hidden px-4 scrollbar-hide"
+          style={{ scrollBehavior: 'auto' }}
+        >
+          {/* Duplicate reviews for infinite scroll effect */}
+          {[...reviews, ...reviews].map((review, index) => (
+            <div 
+              key={`${review.id}-${index}`}
+              className="flex-shrink-0 w-72 bg-card rounded-xl p-4 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            >
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-2">
+                {[...Array(review.rating)].map((_, i) => (
+                  <Star key={i} size={12} className="text-yellow-500 fill-yellow-500" />
+                ))}
+              </div>
+              
+              {/* Review Text */}
+              <p className="text-sm text-foreground mb-3 line-clamp-3">
+                "{review.text}"
               </p>
+              
+              {/* Reviewer Info */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-semibold text-xs">{review.name}</p>
+                  <p className="text-[10px] text-muted-foreground">{review.product}</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <Button asChild variant="default" className="hidden sm:flex gap-2 font-philosopher bg-primary text-primary-foreground hover:bg-primary/90">
-            <a href="https://www.instagram.com/abuhurayrahessentials" target="_blank" rel="noopener noreferrer">
-              <Instagram size={16} />
-              See More
-            </a>
-          </Button>
+          ))}
         </div>
+      </div>
 
-        <div className="max-w-5xl mx-auto px-8">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {reviews.map((review) => (
-                <CarouselItem key={review.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-muted/50 rounded-xl p-5 h-full border border-border hover:border-primary/30 transition-colors">
-                    {/* Stars */}
-                    <div className="flex gap-0.5 mb-3">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} size={14} className="text-yellow-500 fill-yellow-500" />
-                      ))}
-                    </div>
-                    
-                    {/* Review Text */}
-                    <p className="text-sm text-foreground mb-4 line-clamp-4">
-                      "{review.text}"
-                    </p>
-                    
-                    {/* Reviewer Info */}
-                    <div className="mt-auto">
-                      <p className="font-semibold text-sm">{review.name}</p>
-                      <p className="text-xs text-muted-foreground">Purchased: {review.product}</p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
-          </Carousel>
-        </div>
-
-        <div className="mt-8 text-center sm:hidden">
-          <Button asChild className="font-philosopher bg-primary text-primary-foreground hover:bg-primary/90">
-            <a href="https://www.instagram.com/abuhurayrahessentials" target="_blank" rel="noopener noreferrer">
-              <Instagram size={16} className="mr-2" />
-              See More Reviews
-            </a>
-          </Button>
-        </div>
+      {/* See More Button */}
+      <div className="mt-4 text-center">
+        <Button asChild variant="outline" size="sm" className="gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+          <a href="https://www.instagram.com/abuhurayrahessentials" target="_blank" rel="noopener noreferrer">
+            <Instagram size={14} />
+            See More
+          </a>
+        </Button>
       </div>
     </section>
   );
