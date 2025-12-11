@@ -26,7 +26,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CART_STORAGE_KEY = 'maktabah-cart';
 
 const getProductImage = (product: Product): string => {
-  const img = product.image;
+  const img = product.image as string | string[];
   if (typeof img === 'string') return img;
   if (Array.isArray(img) && img.length > 0) return img[0];
   return '/placeholder.svg';
